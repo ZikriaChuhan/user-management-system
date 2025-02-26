@@ -44,17 +44,17 @@ export default function UserTable() {
     const hasSearchFilter = Boolean(filterValue);
 
     useEffect(() => {
-        const fetchTableUsers = async () => {
-            try {
-                const response = await fetch("/api/users");
-                const data = await response.json();
-                setUsers(data.users);
-            } catch (error) {
-                console.error("Error fetching users:", error);
-            }
-        };
         fetchTableUsers();
     }, []);
+    const fetchTableUsers = async () => {
+        try {
+            const response = await fetch("/api/users");
+            const data = await response.json();
+            setUsers(data.users);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
 
     const headerColumns = React.useMemo(() => {
         if (visibleColumns === "all") return columns;
@@ -181,6 +181,8 @@ export default function UserTable() {
 
             if (response.ok) {
                 setUsers(users.filter((user) => user._id !== userId));
+                fetchTableUsers();
+
             } else {
                 console.error("Error deleting user");
             }
