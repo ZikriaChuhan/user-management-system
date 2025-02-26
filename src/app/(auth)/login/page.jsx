@@ -18,7 +18,9 @@ export default function LoginPage() {
         }
     }, [status, router]);
 
-    if (!session) return <p>Loading...</p>;
+    if (status === "loading") {
+      return <p>Loading...</p>;
+  }
 
   return (
     
